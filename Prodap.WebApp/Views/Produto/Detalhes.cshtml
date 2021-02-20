@@ -1,0 +1,98 @@
+﻿@model Produto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Novo Produto</h2>
+
+<main>
+
+    <form class="row" role="form" enctype="multipart/form-data" asp-action="Detalhes" method="post">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="col-5 text-center">
+            <div class="capa">
+                <img class="produto img-fluid"
+                     id="imgCapa"
+                     src="/Produto/ImagemCapa/@Model.Id"
+                     alt="@Model.Nome"
+                     data-id="@Model.Id" />
+
+                <p class="py-3">
+                    <label class="btn btn-outline-dark">
+                        Alterar Capa
+                        <input id="ImagemCapa" asp-for="@Model.ImagemCapa" type="file" class="d-none" accept="image/x-png" />
+                    </label>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-5">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descicao" class="control-label"></label>
+                <input asp-for="Descicao" class="form-control"/>
+                <span asp-validation-for="Descicao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Quantidade" class="control-label"></label>
+                <input asp-for="Quantidade" class="form-control"/>
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeRetirada" class="control-label"></label>
+                <input asp-for="QuantidadeRetirada" class="form-control"/>
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">                
+                <span asp-validation-for="ImagemCapa" class="text-danger"></span>
+            </div>
+
+            <footer class="form-group">
+                <button class="btn btn-outline-success">GRAVAR</button>
+                <button id="btnExcluir" class="btn btn-outline-danger">EXCLUIR</button>
+            </footer>
+        </div>
+
+    </form>
+
+</main>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('#btnExcluir').click(function () {
+                $('form').attr('action', '/Produto/Remover');
+                $('form').submit();
+            });
+            $('#ImagemCapa').change(function () {
+                var input = this;
+                var url = $(this).val();
+                var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                if (input.files && input.files[0] && (ext == "png")) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        console.log("chegou aqui!");
+                        $('#imgCapa').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+                else {
+                    $('#imgCapa').attr('src', '~/images/capa-vazia.png');
+                }
+            });
+        });
+    </script>
+}

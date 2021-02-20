@@ -1,0 +1,7 @@
+﻿@model Produto
+
+<li class="list-group-item my-3 mx-5 border-0">
+    <a asp-action="Detalhes" asp-controller="Produto" asp-route-id="@Model.Id">
+        <img class="produto img-fluid" src="/Produto/ImagemCapa/@Model.Id" alt="@Model.Nome" data-id="@Model.Id">
+    </a>
+</li>

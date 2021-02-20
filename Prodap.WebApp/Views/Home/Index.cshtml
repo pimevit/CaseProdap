@@ -1,0 +1,43 @@
+﻿@model HomeViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <a asp-action="Novo" asp-controller="Produto" id="novo-flutuante">
+        <p class="plus">+</p>
+    </a>
+
+    <div class="row">
+        <div class="card col-md-6 col-lg-3 lista-leitura" id="coluna-produtos" data-id="produtos">
+            <h4 class="card-header">Produtos</h4>
+            <ul class="">
+                @foreach (var produto in Model.Produtos)
+                {
+                    <partial name="~/Views/Shared/Produto.cshtml" model="produto" />
+                }
+            </ul>
+        </div>
+
+        <div class="card col-md-6 col-lg-3 lista-leitura" id="coluna-estoque" data-id="estoque">
+            <h4 class="card-header">Estoque</h4>
+            <ul class="list-group">
+                @foreach (var produto in Model.Estoque)
+                {
+                    <partial name="~/Views/Shared/Produto.cshtml" model="produto" />
+                }
+            </ul>
+        </div>
+
+        <div class="card col-md-6 col-lg-3 lista-leitura" id="coluna-vendendo" data-id="vendendo">
+            <h4 class="card-header">Vendendo</h4>
+            <ul class="">
+                @foreach (var produto in Model.ComVendedores)
+                {
+                    <partial name="~/Views/Shared/Produto.cshtml" model="produto" />
+                }
+            </ul>
+        </div>
+    </div>
+</main>
