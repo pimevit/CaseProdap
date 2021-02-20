@@ -16,11 +16,6 @@ namespace Model
     {
       Picole.Add(item);
     }
-    public void Sincronismo(List<Produto>  Items)
-    {
-
-    }
-
     public decimal QuantidadeTotal()
     {
       return Picole.Sum(x=>x.Quantidade);

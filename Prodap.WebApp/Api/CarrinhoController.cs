@@ -43,8 +43,7 @@ namespace Api.Controllers
     [HttpGet()]
     public IActionResult ProdutosDoCarrinho()
     {
-      _repo.Picole = new List<Produto>() { new Produto{ Id = "S12", Nome ="Picole", Quantidade = 13} };
-      return Ok(_repo);
+      return Ok(_repo.Picole);
     }
     /*public string ver(string str)
     {

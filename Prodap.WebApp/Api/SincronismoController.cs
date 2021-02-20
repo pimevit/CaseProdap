@@ -54,13 +54,18 @@ namespace Prodap.WebApp.Api
     {
       if (ModelState.IsValid)
       {
-        //models.ForEach(model => _repo.Incluir(model));
-        models.FindAll(qtde=> qtde.Quantidade > 0)
-          .AsParallel()
-          .ForAll(model=> _repo.Incluir(model));
+        models.ForEach(model =>
+        {
+          if (model.Quantidade > 0)
+            _repo.Incluir(model);
+        });
+        
+        VendasPicole listSincronismo = new VendasPicole() { DataSincronismo = DateTime.Now.Date, Id = DateTime.Now.Day };
+        
+        listSincronismo.RetornoSincronismo(models);
 
-        var uri = Url.Action("Recuperar", new { id = models.Count });
-        return Created(uri, models); //201
+        var uri = Url.Action("Recuperar", new { id = listSincronismo.Id });
+        return Created(uri, listSincronismo);
       }
       return BadRequest();
     }
@@ -70,7 +75,7 @@ namespace Prodap.WebApp.Api
       if (ModelState.IsValid)
       {        
         _repo.Alterar(model);
-        return Ok(); //200
+        return Ok();
       }
       return BadRequest();
     }
