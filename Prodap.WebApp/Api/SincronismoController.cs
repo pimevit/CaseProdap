@@ -64,5 +64,27 @@ namespace Prodap.WebApp.Api
       }
       return BadRequest();
     }
+    [HttpPut]
+    public IActionResult Alterar([FromBody] Vendas model)
+    {
+      if (ModelState.IsValid)
+      {        
+        _repo.Alterar(model);
+        return Ok(); //200
+      }
+      return BadRequest();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Remover(int id)
+    {
+      var model = _repo.Find(id);
+      if (model == null)
+      {
+        return NotFound();
+      }
+      _repo.Excluir(model);
+      return NoContent(); //203
+    }
   }
 }
